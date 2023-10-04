@@ -11,6 +11,8 @@ import {
   Stack,
   Flex,
   Heading,
+  Box,
+  Divider,
 } from '@chakra-ui/react';
 import client from '../../api/axiosInstance';
 
@@ -56,9 +58,9 @@ export default function CompanyDetails() {
 
 
     if (Object.keys(newErrors).length === 0) {
-     
+
       console.log('Form submitted:', formData);
-       postReq()
+      postReq()
     }
   };
 
@@ -68,12 +70,12 @@ export default function CompanyDetails() {
       const postData = {
         name: formData.companyName,
         gstin: formData.gstinNumber,
-        address : {
-          street : formData.street,
-          city : formData.city,
-          state : formData.state,
-          pin : formData.pin,
-          country : formData.country,
+        address: {
+          street: formData.street,
+          city: formData.city,
+          state: formData.state,
+          pin: formData.pin,
+          country: formData.country,
         }
       }
 
@@ -83,106 +85,113 @@ export default function CompanyDetails() {
         }
       });
 
-      if(response.status === 201){
+      if (response.status === 201) {
         console.log('Data saved:', response.data);
         setFormData(initialFormData);
       }
-      else{
+      else {
         console.error('Failed to save data:', response.status);
       }
-    }catch(error){
+    } catch (error) {
       console.error('An error occurred while saving data:', error);
     }
 
   }
 
   return (
+    <>
+      <Flex flexDirection="column">
+        <Flex alignItems='center' justifyContent='flex-start' mt='1em'>
+          <Box>
+            <Heading size='md' color='#34495E'>Register Company</Heading>
+          </Box>
+        </Flex>
+        <Divider mt="1em" borderColor="blue.500" borderWidth="0.1em" width="55em" />
+      </Flex>
+
+      <Flex alignItems='center' justifyContent='center' p='4'>
+        <form>
+          <Stack spacing={4} mt='1em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
+            <FormControl isRequired isInvalid={!!errors.companyName}>
+              <FormLabel>Company Name</FormLabel>
+              <Input
+                type="text"
+                name="companyName"
+                value={formData.companyName}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{errors.companyName}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isRequired isInvalid={!!errors.gstinNumber}>
+              <FormLabel>GSTIN Number</FormLabel>
+              <Input
+                type="text"
+                name="gstinNumber"
+                value={formData.gstinNumber}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{errors.gstinNumber}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Address</FormLabel>
+              <HStack>
+                <Input
+                  type="text"
+                  name="street"
+                  value={formData.street}
+                  onChange={handleChange}
+                  placeholder="Street"
+                />
+
+                <Input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  placeholder="City"
+                />
 
 
-    <Flex alignItems='center' justifyContent='center' p='4' position='absolute' left='25em'>
-      <form>
-        <Stack spacing={4} mt='3em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
-          <Heading textAlign="center" size="lg">Register Company</Heading>
-          <FormControl isRequired isInvalid={!!errors.companyName}>
-            <FormLabel>Company Name</FormLabel>
-            <Input
-              type="text"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>{errors.companyName}</FormErrorMessage>
-          </FormControl>
 
-          <FormControl isRequired isInvalid={!!errors.gstinNumber}>
-            <FormLabel>GSTIN Number</FormLabel>
-            <Input
-              type="text"
-              name="gstinNumber"
-              value={formData.gstinNumber}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>{errors.gstinNumber}</FormErrorMessage>
-          </FormControl>
+              </HStack>
+            </FormControl>
 
-          <FormControl>
-            <FormLabel>Address</FormLabel>
             <HStack>
-            <Input
-              type="text"
-              name="street"
-              value={formData.street}
-              onChange={handleChange}
-              placeholder="Street"
-            />
+              <Input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                placeholder="State"
+              />
 
-          <Input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              placeholder="City"
-            />
-
-          
-            
+              <Input
+                type="text"
+                name="pin"
+                value={formData.pin}
+                onChange={handleChange}
+                placeholder="PIN"
+              />
             </HStack>
-          </FormControl>
+            <FormControl>
+              <FormLabel>Country</FormLabel>
+              <Input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <Button colorScheme="blue" w='10em' position='relative' top='1em' left='13em' onClick={handleSubmit}>
+              Submit
+            </Button>
+          </Stack>
 
-          <HStack>
-            <Input
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              placeholder="State"
-            />
+        </form>
 
-            <Input
-              type="text"
-              name="pin"
-              value={formData.pin}
-              onChange={handleChange}
-              placeholder="PIN"
-            />
-          </HStack>
-          <FormControl>
-            <FormLabel>Country</FormLabel>
-            <Input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <Button colorScheme="blue" w='10em' position='relative' top='1em' left='13em' onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Stack>
-
-      </form>
-
-    </Flex>
-
+      </Flex>
+    </>
   );
 }

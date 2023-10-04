@@ -33,12 +33,11 @@ export default function Sidebar() {
   return (
     <Box
       w="18em"
-      position={"fixed"}
       h="100vh"
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+      <Flex h="20" alignItems="center" mx="8" mt="3" justifyContent="space-between">
         <Image src="/images/logo.jpeg" w="13rem" />
       </Flex>
 

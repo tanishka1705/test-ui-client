@@ -12,6 +12,7 @@ import {
   Flex,
   Heading,
   Select,
+  Divider,
 } from '@chakra-ui/react';
 import client from '../../api/axiosInstance';
 
@@ -121,13 +122,18 @@ export default function ProjectDetails() {
   }
 
   return (
-    <Flex alignItems='center' justifyContent='center' p='4' position='absolute' left='25em'>
+    <>
+    <Flex flexDirection="column">
+        <Flex alignItems='center' justifyContent='flex-start' mt='1em'>
+          <Box>
+            <Heading size='md' color='#34495E'> Add Project Details</Heading>
+          </Box>
+        </Flex>
+        <Divider mt="1em" borderColor="blue.500" borderWidth="0.1em" width="55em" />
+      </Flex>
+    <Flex alignItems='center' justifyContent='center' p='4' >
       <form>
         <Stack spacing={4} mt='1em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
-          <Heading textAlign='center' size='lg'>
-            Add Project Details
-          </Heading>
-
           <FormControl isRequired isInvalid={!!errors.projectName}>
             <FormLabel>Project Name</FormLabel>
             <Input
@@ -217,5 +223,6 @@ export default function ProjectDetails() {
         </Stack>
       </form>
     </Flex>
+    </>
   );
 }

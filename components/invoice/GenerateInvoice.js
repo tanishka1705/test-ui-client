@@ -25,14 +25,14 @@ export default function GenerateInvoice() {
   return (
     <Flex flexDirection="column">
       <Flex alignItems='center' justifyContent='flex-start' mt='4em'>
-        <Box position='relative' left='20em'>
+        <Box>
           <Heading size='md' color='#34495E'>Generate Invoice</Heading>
         </Box>
       </Flex>
 
-      <Divider mt="1em" borderColor="blue.500" borderWidth="0.1em" width="55em" position='relative' left='20em' />
+      <Divider mt="1em" borderColor="blue.500" borderWidth="0.1em" width="55em" />
 
-      <Box mt="2em" mx="auto" position='relative' >
+      <Box mt="2em" mx="auto" >
         <HStack spacing={5}>
           <form>
             <Stack spacing={4}>
@@ -50,7 +50,7 @@ export default function GenerateInvoice() {
               </FormControl>
             </Stack>
           </form>
-          <Box position='relative' left='15em' mt='1.5em'>
+          <Box>
             <Heading size='sm'>GAMMAEDGE TECHNOLOGIES PRIVATE LIMITED</Heading>
             <Text fontSize='sm'>GSTIN: 23AAJCG9212C1ZZ</Text>
             <Text fontSize='sm'>PAN : AAJCG9212C</Text>

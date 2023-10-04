@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react'
 import Sidebar from './Sidebar'
-import { Box } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 
 export default function Layout(props) {
   return (
-    <Fragment>
+    <Flex>
         <Sidebar />
-        <Box>
+        <Box padding={'1rem'}>
             {props.children}
         </Box>
-    </Fragment>
+    </Flex>
   )
 }
