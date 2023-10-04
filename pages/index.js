@@ -2,8 +2,11 @@ import AdminHome from '../components/adminHome/AdminHome'
 import client from '../api/axiosInstance'
 import Cards from '../components/cards/Card'
 import { Heading } from '@chakra-ui/react'
+import toast from 'react-hot-toast'
 
 export default function Home({ allListedCompanies, message }) {
+
+  if (message) toast.error(message)
 
   return (
     <>

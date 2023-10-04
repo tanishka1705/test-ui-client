@@ -12,7 +12,7 @@ export default function ViewProjectDeatilsHome({ allListedProjects, message }) {
 
 export async function getServerSideProps() {
   const { data } = await client('/projects')
-  console.log(data);
+  // console.log(data);
   if (data.success === 'true') {
     return {
       props: { allListedProjects: data.allListedProjects}
