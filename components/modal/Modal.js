@@ -1,14 +1,19 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Button, Input, Box, Flex } from '@chakra-ui/react'
 import client from '../../api/axiosInstance'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 const ActionModal = ({ isOpen, onClose, id, name, gstin, address, setName, setGSTIN, setAddress }) => {
+
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const submitHandler = async (e) => {
         e.preventDefault()
 
         try {
+            setIsLoading(true)
             const { data } = await client({
                 url: `/companies/${id}`,
                 method: 'PATCH',
@@ -17,15 +22,18 @@ const ActionModal = ({ isOpen, onClose, id, name, gstin, address, setName, setGS
                 },
                 data: JSON.stringify({ name, gstin, address: address })
             })
-            console.log(data);
+
+            setIsLoading(false)
 
             if (data.status === 'true') {
                 toast.success('Company Updated Successfully!')
                 onClose(false)
+                router.push('/')
             }
-            else throw(data.message)
+            else throw (data.message)
+
         } catch (error) {
-            console.log(error);
+            setIsLoading(false)
             toast.error(error.response.data.message)
         }
     }
@@ -95,7 +103,7 @@ const ActionModal = ({ isOpen, onClose, id, name, gstin, address, setName, setGS
 
                     <ModalFooter as='div'>
                         <Button type='submit' colorScheme='purple' mr={3}>
-                            Submit
+                            {`${isLoading ? 'Updating' : 'Submit'}`}
                         </Button>
                         <Button onClick={() => onClose(false)}>Cancel</Button>
                     </ModalFooter>

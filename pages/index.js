@@ -1,26 +1,36 @@
-
-import React, { useEffect } from 'react'
 import AdminHome from '../components/adminHome/AdminHome'
 import client from '../api/axiosInstance'
+import Cards from '../components/cards/Card'
+import { Heading } from '@chakra-ui/react'
 
 export default function Home({ allListedCompanies, message }) {
-  if (message) return toast.error(message)
 
   return (
-    <AdminHome allListedCompanies={allListedCompanies} />
-    
+    <>
+      <Cards />
+      {
+        allListedCompanies === undefined ?
+          <Heading fontSize={'lg'} my='16' textAlign='center'>{message}</Heading>
+          : (
+            <AdminHome allListedCompanies={allListedCompanies} />
+          )
+      }
+    </>
   )
 }
 
 export async function getServerSideProps() {
-  const { data } = await client('/companies')
-
-  if (data.status === 'true') {
-    return {
-      props: { allListedCompanies: data.allListedCompanies }
+  try {
+    const { data } = await client('/companies')
+    if (data.status === 'true') {
+      return {
+        props: { allListedCompanies: data.allListedCompanies }
+      }
     }
-  }
-  return {
-    props: { message: data.message }
+    else throw new Error(data.message)
+  } catch (error) {
+    return {
+      props: { message: error.response.data.message }
+    }
   }
 }
