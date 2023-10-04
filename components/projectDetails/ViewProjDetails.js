@@ -1,12 +1,16 @@
 import React from 'react'
-import { Box, Heading, Flex } from '@chakra-ui/react'
+import { Box, Heading, Flex, Divider } from '@chakra-ui/react'
 
 export default function ViewProjDetails() {
   return (
-    <Box>
-      <Flex alignItems='center' justifyContent='center'>
-      <Heading>Project Details List</Heading>
+   
+    <Flex flexDirection="column">
+      <Flex alignItems='center' justifyContent='flex-start' mt='4em'>
+        <Box position='relative' left='20em'>
+          <Heading size='md' color='#34495E'>Project Details</Heading>
+        </Box>
       </Flex>
-    </Box>
+      <Divider mt="1em" borderColor="blue.500" borderWidth="0.1em" width="55em" position='relative' left='20em' />
+    </Flex>
   )
 }

@@ -84,7 +84,7 @@ export default function ProjectDetails() {
     if (Object.keys(newErrors).length === 0) {
       
       console.log('Form submitted:', formData);
-      // setFormData(initialFormData);
+      
       postReqProject();
     }
 
@@ -123,7 +123,7 @@ export default function ProjectDetails() {
   return (
     <Flex alignItems='center' justifyContent='center' p='4' position='absolute' left='25em'>
       <form>
-        <Stack spacing={4} mt='3em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
+        <Stack spacing={4} mt='1em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
           <Heading textAlign='center' size='lg'>
             Add Project Details
           </Heading>

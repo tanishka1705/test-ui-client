@@ -1,8 +1,27 @@
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Heading, Flex, Divider, Stack, FormControl, FormLabel, Input, HStack, Text, Link, Select } from '@chakra-ui/react'
+import client from '../../api/axiosInstance';
 
 export default function GenerateInvoice() {
+
+  const [companyData, setCompanyData] = useState([]);
+
+  useEffect(() => {
+    selectCompany();
+  }, []);
+
+  async function selectCompany(){
+    const response = await client.get('/companies')
+    const fetchCompanyData = response.data.allListedCompanies;
+    const companyData = fetchCompanyData.map((company)=>({
+      id : company._id,
+      name : company.name,
+    })
+    )
+    setCompanyData(companyData);
+  }
+
   return (
     <Flex flexDirection="column">
       <Flex alignItems='center' justifyContent='flex-start' mt='4em'>
@@ -18,15 +37,15 @@ export default function GenerateInvoice() {
           <form>
             <Stack spacing={4}>
               <FormControl id="invoiceNumber">
-                <FormLabel>Invoice Number</FormLabel>
+                <FormLabel fontWeight='bold'>Invoice Number</FormLabel>
                 <Input type="number" />
               </FormControl>
               <FormControl id="invoiceDate">
-                <FormLabel>Invoice Date</FormLabel>
+                <FormLabel fontWeight='bold'>Invoice Date</FormLabel>
                 <Input type="date" />
               </FormControl>
               <FormControl id="dueDate">
-                <FormLabel>Due Date</FormLabel>
+                <FormLabel fontWeight='bold'>Due Date</FormLabel>
                 <Input type="date" />
               </FormControl>
             </Stack>
@@ -45,10 +64,12 @@ export default function GenerateInvoice() {
             </address>
             <FormControl id="dropdown" mt="1.5em">
               <FormLabel><Heading size='xs'>Bill To:</Heading></FormLabel>
-              <Select placeholder="Select an option" mt='1em'>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+              <Select placeholder="Select an option" mt='1em'>           
+                {companyData.map((company) => (
+                <option key={company.id} value={company.id}>
+                  {company.name}
+                </option>
+              ))}
               </Select>
             </FormControl>
           </Box>
