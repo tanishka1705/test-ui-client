@@ -30,7 +30,7 @@ const ViewProjDetails = ({allListedProjects}) => {
                     <Table variant='simple' colorScheme='gray'>
                         <Thead>
                             <Tr>
-                                {/* <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>SNO</Th> */}
+                               
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Description</Th>
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Company</Th>
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Rate</Th>
@@ -42,7 +42,7 @@ const ViewProjDetails = ({allListedProjects}) => {
                         <Tbody>
                             {allListedProjects.map((project, indx) => (
                                 <Tr key={indx} h='0.2rem' fontSize='sm'>
-                                    {/* <Td>{indx + 1}</Td> */}
+                                   
                                     <Td>{project.description}</Td>
                                     <Td>{project.company}</Td>
                                     <Td>{project.rate}</Td>

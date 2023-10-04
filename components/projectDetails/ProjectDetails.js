@@ -42,15 +42,30 @@ export default function ProjectDetails() {
     getCompanies()
   },[])
 
-  async function getCompanies(){
-    const response = await client.get('/companies')
-    const fetchCompanyData = response.data.allListedCompanies;
-    const companyData = fetchCompanyData.map((company)=>({
-      id : company._id,
-      name : company.name,
-    })
-    )
-    setCompanyData(companyData);
+  // async function getCompanies(){
+  //   const response = await client.get('/companies')
+  //   const fetchCompanyData = response.data.allListedCompanies;
+  //   const companyData = fetchCompanyData.map((company)=>({
+  //     id : company._id,
+  //     name : company.name,
+  //   })
+  //   )
+  //   setCompanyData(companyData);
+  // }
+
+  async function getCompanies() {
+    try {
+      const response = await client.get('/companies');
+      const fetchCompanyData = response.data.allListedCompanies;
+      const companyData = fetchCompanyData.map((company) => ({
+        id: company._id,
+        name: company.name,
+      }));
+      setCompanyData(companyData);
+    } catch (error) {
+      console.error('An error occurred while fetching companies:', error);
+      // toast.error('An error occurred while fetching companies');
+    }
   }
 
   const handleChange = (e) => {
@@ -112,6 +127,7 @@ export default function ProjectDetails() {
       if(response.status === 201){
         console.log('Data saved:', response.data);
         setFormData(initialFormData);
+        toast.success('Project Added Successfully')
       }
       else{
         console.error('Failed to save data:', response.status);

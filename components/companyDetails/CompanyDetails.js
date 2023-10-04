@@ -90,7 +90,7 @@ export default function CompanyDetails() {
   
         if (response.status === 201) {
           setFormData(initialFormData);
-          // toast.success('Company Registered Successfully')
+          toast.success('Company Registered Successfully')
         }
         else {
           console.error('not saved');
