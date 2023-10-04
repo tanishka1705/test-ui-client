@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, Stack, Flex, Heading, Select, Divider } from '@chakra-ui/react';
 import client from '../../api/axiosInstance';
+import toast from 'react-hot-toast'
 
 export default function ProjectDetails() {
 
@@ -23,15 +24,36 @@ export default function ProjectDetails() {
     inrRate: '',
   });
 
+  const [companyData, setCompanyData] = useState([]);
+
+  useEffect(()=>{
+    getCompanies()
+  },[])
+
+  // async function getCompanies(){
+  //   const response = await client.get('/companies')
+  //   const fetchCompanyData = response.data.allListedCompanies;
+  //   const companyData = fetchCompanyData.map((company)=>({
+  //     id : company._id,
+  //     name : company.name,
+  //   })
+  //   )
+  //   setCompanyData(companyData);
+  // }
+
   async function getCompanies() {
-    const response = await client.get('/companies')
-    const fetchCompanyData = response.data.allListedCompanies;
-    const companyData = fetchCompanyData.map((company) => ({
-      id: company._id,
-      name: company.name,
-    })
-    )
-    setCompanyData(companyData);
+    try {
+      const response = await client.get('/companies');
+      const fetchCompanyData = response.data.allListedCompanies;
+      const companyData = fetchCompanyData.map((company) => ({
+        id: company._id,
+        name: company.name,
+      }));
+      setCompanyData(companyData);
+    } catch (error) {
+      console.error('An error occurred while fetching companies:', error);
+      // toast.error('An error occurred while fetching companies');
+    }
   }
 
   useEffect(() => {
@@ -93,6 +115,7 @@ export default function ProjectDetails() {
       if (response.status === 201) {
         console.log('Data saved:', response.data);
         setFormData(initialFormData);
+        toast.success('Project Added Successfully')
       }
       else {
         console.error('Failed to save data:', response.status);

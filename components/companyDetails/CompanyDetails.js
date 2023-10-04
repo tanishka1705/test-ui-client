@@ -12,15 +12,8 @@ import {
   Heading,
   Box,
   Divider,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  Text,
 } from '@chakra-ui/react';
-
+import toast from 'react-hot-toast'
 import client from '../../api/axiosInstance';
 
 export default function CompanyDetails() {
@@ -63,13 +56,13 @@ export default function CompanyDetails() {
       if (!formData.gstinNumber.trim()) {
         newErrors.gstinNumber = 'GSTIN Number is required';
       }
+
+
   
       setErrors(newErrors);
   
   
       if (Object.keys(newErrors).length === 0) {
-  
-        console.log('Form submitted:', formData);
         postReq()
       }
     };
@@ -96,15 +89,12 @@ export default function CompanyDetails() {
         });
   
         if (response.status === 201) {
-          console.log('Data saved:', response.data);
           setFormData(initialFormData);
+          toast.success('Company Registered Successfully')
         }
         else {
-          console.error('Failed to save data:', response.status);
-           if(response.data.status === 'fail'){
-            
-          
-           }
+          console.error('not saved');
+
         }
       } catch (error) {
         console.error('An error occurred while saving data:', error);
