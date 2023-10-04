@@ -52,13 +52,13 @@ export default function Sidebar() {
           <HStack>
             <Image src="/images/companylogo.svg" w="1.2em" />
             <Link href='/company-details'>
-              <ListItem _hover={listItemStyles}>Company Details</ListItem>
+              <ListItem _hover={listItemStyles}>Create Company</ListItem>
             </Link> 
           </HStack>
           <HStack>
             <Image src="/images/projectlogo.svg" w="1.2em" />
             <Link href='/project-details'>
-              <ListItem _hover={listItemStyles}>Project Details</ListItem>
+              <ListItem _hover={listItemStyles}>Create Project</ListItem>
             </Link>
           </HStack>
         
