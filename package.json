@@ -16,7 +16,10 @@
     "framer-motion": "^10.16.4",
     "next": "^13.0.7",
     "react": "^18.2.0",
+<<<<<<< HEAD
     "react-data-table-component": "^7.5.4",
+=======
+>>>>>>> 0ec3ebe26b4a354492f9b99a61f2c6c61d7a34a8
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1"
   },
