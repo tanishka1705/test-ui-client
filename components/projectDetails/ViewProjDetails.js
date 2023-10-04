@@ -1,8 +1,20 @@
 import React from 'react'
 import { Box, Heading, Flex, Divider, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+// import ActionModal from '../modal/Modal';
+import ProjectModal from '../modal/ProjectModal';
 
 const ViewProjDetails = ({allListedProjects}) => {
+ 
+    const [isOpen, setIsOpen] = useState(false)
+    const [id, setId] = useState('')
+    const [description, setDescription] = useState('')
+    const [company, setCompany] = useState('')
+    const [rate, setRate] = useState('')
+    const [totalHours, setTotalHours] = useState('')
+    const [conversionRate, setConversionRate] = useState('')
+
   return (
     <>
     <Flex flexDirection="column">
@@ -18,8 +30,9 @@ const ViewProjDetails = ({allListedProjects}) => {
                     <Table variant='simple' colorScheme='gray'>
                         <Thead>
                             <Tr>
-                                <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>SNO</Th>
+                                {/* <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>SNO</Th> */}
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Description</Th>
+                                <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Company</Th>
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Rate</Th>
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Total Hour</Th>
                                 <Th sx={{ fontSize: '0.8rem', color: '#0b0e37db' }}>Conversion Rate</Th>
@@ -29,19 +42,24 @@ const ViewProjDetails = ({allListedProjects}) => {
                         <Tbody>
                             {allListedProjects.map((project, indx) => (
                                 <Tr key={indx} h='0.2rem' fontSize='sm'>
-                                    <Td>{indx + 1}</Td>
+                                    {/* <Td>{indx + 1}</Td> */}
                                     <Td>{project.description}</Td>
+                                    <Td>{project.company}</Td>
                                     <Td>{project.rate}</Td>
-                                    {/* <Td fontSize='xs'>
-                                        <p>{`${company.address.street}, ${company.address.city}`}</p>
-                                        <p>
-                                            {`${company.address.state} ${company.address.pin}, ${company.address.country}`}
-                                        </p>
-                                    </Td> */}
                                     <Td>{project.totalHours}</Td>
                                     <Td>{project.conversionRate}</Td>
                                     <Td cursor={'pointer'} p={0}> 
-                                        <EditIcon color={'blue.500'}/>
+                                       <EditIcon color={'blue.500'}
+                                        onClick={() => {
+                                            setIsOpen(true)
+                                            setId(project._id)
+                                            setDescription(project.description)
+                                            setCompany(project.company)
+                                            setRate(project.rate)
+                                            setTotalHours(project.totalHours)
+                                            setConversionRate(project.conversionRate)
+                                        }}
+                                        />
                                     </Td>
                                     <Td cursor={'pointer'} p={0}>
                                         <DeleteIcon color={'red.500'}/>
@@ -52,6 +70,8 @@ const ViewProjDetails = ({allListedProjects}) => {
                     </Table>
                 </TableContainer>
             </Flex>
+            {/* <ActionModal isOpen={isOpen} onClose={setIsOpen} id={id} name={name} gstin={gstin} address={address} setName={setName} setGSTIN={setGSTIN} setAddress={setAddress} /> */}
+     <ProjectModal isOpen={isOpen} onClose={setIsOpen}  />
     </>
   )
 }

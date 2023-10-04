@@ -15,6 +15,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import client from '../../api/axiosInstance';
+import toast from 'react-hot-toast'
 
 export default function ProjectDetails() {
   const initialFormData = {
