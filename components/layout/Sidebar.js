@@ -33,7 +33,6 @@ export default function Sidebar() {
   return (
     <Box
       w="18em"
-      position={"fixed"}
       h="100vh"
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
