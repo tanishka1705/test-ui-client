@@ -24,23 +24,6 @@ export default function ProjectDetails() {
     inrRate: '',
   });
 
-  const [companyData, setCompanyData] = useState([]);
-
-  useEffect(()=>{
-    getCompanies()
-  },[])
-
-  // async function getCompanies(){
-  //   const response = await client.get('/companies')
-  //   const fetchCompanyData = response.data.allListedCompanies;
-  //   const companyData = fetchCompanyData.map((company)=>({
-  //     id : company._id,
-  //     name : company.name,
-  //   })
-  //   )
-  //   setCompanyData(companyData);
-  // }
-
   async function getCompanies() {
     try {
       const response = await client.get('/companies');
@@ -52,7 +35,6 @@ export default function ProjectDetails() {
       setCompanyData(companyData);
     } catch (error) {
       console.error('An error occurred while fetching companies:', error);
-      // toast.error('An error occurred while fetching companies');
     }
   }
 
