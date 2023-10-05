@@ -1,33 +1,21 @@
 
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  HStack,
-  Input,
-  Stack,
-  Flex,
-  Heading,
-  Select,
-  Divider,
-} from '@chakra-ui/react';
+import { Box, Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, Stack, Flex, Heading, Select, Divider } from '@chakra-ui/react';
 import client from '../../api/axiosInstance';
 import toast from 'react-hot-toast'
 
 export default function ProjectDetails() {
-  const initialFormData = {
+
+  const [formData, setFormData] = useState({
     projectName: '',
     companyName: '',
     rate: '',
     hours: '',
     inrRate: '',
-  };
+  });
 
-  const [formData, setFormData] = useState(initialFormData);
 
+  const [companyData, setCompanyData] = useState([]);
   const [errors, setErrors] = useState({
     projectName: '',
     companyName: '',
@@ -68,6 +56,10 @@ export default function ProjectDetails() {
     }
   }
 
+  useEffect(() => {
+    getCompanies()
+  }, [])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -77,8 +69,8 @@ export default function ProjectDetails() {
   };
 
   const handleSubmit = () => {
-    
-    const newErrors = {};companyData
+
+    const newErrors = {}; companyData
     if (!formData.projectName.trim()) {
       newErrors.projectName = 'Project Name is required';
     }
@@ -97,11 +89,8 @@ export default function ProjectDetails() {
 
     setErrors(newErrors);
 
-   
+
     if (Object.keys(newErrors).length === 0) {
-      
-      console.log('Form submitted:', formData);
-      
       postReqProject();
     }
 
@@ -112,11 +101,10 @@ export default function ProjectDetails() {
       const postProjectData = {
         description: formData.projectName,
         rate: formData.rate,
-        totalHours : formData.hours,
-        conversionRate : formData.inrRate,
-        companyId : formData.companyName,
-        }
-      
+        totalHours: formData.hours,
+        conversionRate: formData.inrRate,
+        companyId: formData.companyName,
+      }
 
       const response = await client.post('/projects', postProjectData, {
         headers: {
@@ -124,15 +112,15 @@ export default function ProjectDetails() {
         }
       });
 
-      if(response.status === 201){
+      if (response.status === 201) {
         console.log('Data saved:', response.data);
         setFormData(initialFormData);
         toast.success('Project Added Successfully')
       }
-      else{
+      else {
         console.error('Failed to save data:', response.status);
       }
-    }catch(error){
+    } catch (error) {
       console.error('An error occurred while saving data:', error);
     }
 
@@ -140,7 +128,7 @@ export default function ProjectDetails() {
 
   return (
     <>
-    <Flex flexDirection="column">
+      <Flex flexDirection="column">
         <Flex alignItems='center' justifyContent='flex-start' mt='1em'>
           <Box>
             <Heading size='md' color='#34495E'> Add Project Details</Heading>
@@ -148,98 +136,98 @@ export default function ProjectDetails() {
         </Flex>
         <Divider mt="1em" borderColor="blue.500" borderWidth="0.1em" width="55em" />
       </Flex>
-    <Flex alignItems='center' justifyContent='center' p='4' >
-      <form>
-        <Stack spacing={4} mt='1em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
-          <FormControl isRequired isInvalid={!!errors.projectName}>
-            <FormLabel>Project Name</FormLabel>
-            <Input
-              type='text'
-              name='projectName'
-              value={formData.projectName}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>{errors.projectName}</FormErrorMessage>
-          </FormControl>
-
-          <FormControl isRequired>
-            <FormLabel>Company Name</FormLabel>
-            <Select
-              name='companyName'
-              value={formData.companyName}
-              onChange={handleChange}
-              placeholder='Select a company'
-            >
-              {companyData.map((company) => (
-                <option key={company.id} value={company.id}>
-                  {company.name}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl isRequired isInvalid={!!errors.rate}>
-            <FormLabel>Rate (per hour)</FormLabel>
-            <Input
-              type='number'
-              name='rate'
-              value={formData.rate}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>{errors.rate}</FormErrorMessage>
-          </FormControl>
-
-          <FormControl isRequired isInvalid={!!errors.hours}>
-            <FormLabel>Total Working Hours</FormLabel>
-            <Input
-              type='time'
-              name='hours'
-              value={formData.hours}
-              onChange={handleChange}
-              placeholder='HH:MM'
-            />
-            <FormErrorMessage>{errors.hours}</FormErrorMessage>
-          </FormControl>
-
-          <HStack>
-            
-
-            <FormControl>
-              <FormLabel>$ (USD) Rate</FormLabel>
+      <Flex alignItems='center' justifyContent='center' p='4' >
+        <form>
+          <Stack spacing={4} mt='1em' bg='#B9D9EB' p={10} borderRadius={5} w='40em'>
+            <FormControl isRequired isInvalid={!!errors.projectName}>
+              <FormLabel>Project Name</FormLabel>
               <Input
-                type='number'
-                name='usdRate'
-                value='1'
-                isDisabled
-              />
-            </FormControl>
-
-            <FormControl isRequired isInvalid={!!errors.inrRate}>
-              <FormLabel>Conversion Rate</FormLabel>
-              <Input
-                type='number'
-                name='inrRate'
-                value={formData.inrRate}
+                type='text'
+                name='projectName'
+                value={formData.projectName}
                 onChange={handleChange}
-                placeholder='INR Rate'
               />
-              <FormErrorMessage>{errors.inrRate}</FormErrorMessage>
+              <FormErrorMessage>{errors.projectName}</FormErrorMessage>
             </FormControl>
-          </HStack>
 
-          <Button
-            colorScheme='blue'
-            w='10em'
-            position='relative'
-            top='1em'
-            left='13em'
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </Stack>
-      </form>
-    </Flex>
+            <FormControl isRequired>
+              <FormLabel>Company Name</FormLabel>
+              <Select
+                name='companyName'
+                value={formData.companyName}
+                onChange={handleChange}
+                placeholder='Select a company'
+              >
+                {data.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.name}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl isRequired isInvalid={!!errors.rate}>
+              <FormLabel>Rate (per hour)</FormLabel>
+              <Input
+                type='number'
+                name='rate'
+                value={formData.rate}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>{errors.rate}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isRequired isInvalid={!!errors.hours}>
+              <FormLabel>Total Working Hours</FormLabel>
+              <Input
+                type='time'
+                name='hours'
+                value={formData.hours}
+                onChange={handleChange}
+                placeholder='HH:MM'
+              />
+              <FormErrorMessage>{errors.hours}</FormErrorMessage>
+            </FormControl>
+
+            <HStack>
+
+
+              <FormControl>
+                <FormLabel>$ (USD) Rate</FormLabel>
+                <Input
+                  type='number'
+                  name='usdRate'
+                  value='1'
+                  isDisabled
+                />
+              </FormControl>
+
+              <FormControl isRequired isInvalid={!!errors.inrRate}>
+                <FormLabel>Conversion Rate</FormLabel>
+                <Input
+                  type='number'
+                  name='inrRate'
+                  value={formData.inrRate}
+                  onChange={handleChange}
+                  placeholder='INR Rate'
+                />
+                <FormErrorMessage>{errors.inrRate}</FormErrorMessage>
+              </FormControl>
+            </HStack>
+
+            <Button
+              colorScheme='blue'
+              w='10em'
+              position='relative'
+              top='1em'
+              left='13em'
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          </Stack>
+        </form>
+      </Flex>
     </>
   );
 }
