@@ -10,15 +10,34 @@ export default function ViewProjectDeatilsHome({ allListedProjects, message }) {
   )
 }
 
+// export async function getServerSideProps() {
+//   const { data } = await client('/projects')
+//   console.log(data);
+//   if (data.success === 'true') {
+//     return {
+//       props: { allListedProjects: data.allListedProjects}
+//     }
+//   }
+//   return {
+//     props: { message: data.message }
+//   }
+// }
+
 export async function getServerSideProps() {
-  const { data } = await client('/projects')
-  console.log(data);
-  if (data.success === 'true') {
-    return {
-      props: { allListedProjects: data.allListedProjects}
+  try {
+    const { data } = await client('/projects')
+    console.log(data);
+    if (data.success === 'true') {
+      return {
+        props: { allListedProjects: data.allListedProjects }
+      }
+    } else {
+      throw new Error(data.message);
     }
-  }
-  return {
-    props: { message: data.message }
+  } catch (error) {
+    console.error('Error in getServerSideProps:', error);
+    return {
+      props: { message: 'An error occurred while fetching data' }
+    }
   }
 }

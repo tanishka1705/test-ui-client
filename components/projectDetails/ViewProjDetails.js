@@ -76,4 +76,4 @@ const ViewProjDetails = ({allListedProjects}) => {
   )
 }
 
-export default ViewProjDetails;
+export default ViewProjDetails;  
